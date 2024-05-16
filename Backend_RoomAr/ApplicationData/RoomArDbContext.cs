@@ -27,6 +27,8 @@ public partial class RoomArDbContext : DbContext
 
     public virtual DbSet<FurnituresColor> FurnituresColors { get; set; }
 
+    public virtual DbSet<FurnituresModel> FurnituresModels { get; set; }
+
     public virtual DbSet<FurnituresPhoto> FurnituresPhotos { get; set; }
 
     public virtual DbSet<FurnituresReview> FurnituresReviews { get; set; }
@@ -41,7 +43,7 @@ public partial class RoomArDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=IgorPC\\SQLEXPRESS;Database=RoomArDb;Trusted_Connection=True;Integrated Security=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=IgorPc\\SQLEXPRESS; Database=RoomArDb; Trusted_Connection=True; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -131,6 +133,20 @@ public partial class RoomArDbContext : DbContext
                 .HasForeignKey(d => d.FurnitureId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_FurnituresColors_Furnitures");
+        });
+
+        modelBuilder.Entity<FurnituresModel>(entity =>
+        {
+            entity.HasKey(e => e.FurnitureModelId);
+
+            entity.Property(e => e.FurnitureModelId).HasColumnName("furniture_model_id");
+            entity.Property(e => e.FurnitureId).HasColumnName("furniture_id");
+            entity.Property(e => e.Model).HasColumnName("model");
+
+            entity.HasOne(d => d.Furniture).WithMany(p => p.FurnituresModels)
+                .HasForeignKey(d => d.FurnitureId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FurnituresModels_Furnitures");
         });
 
         modelBuilder.Entity<FurnituresPhoto>(entity =>

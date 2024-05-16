@@ -31,6 +31,8 @@ public partial class Furniture
 
     public virtual ICollection<FurnituresColor> FurnituresColors { get; set; } = new List<FurnituresColor>();
 
+    public virtual ICollection<FurnituresModel> FurnituresModels { get; set; } = new List<FurnituresModel>();
+
     public virtual ICollection<FurnituresPhoto> FurnituresPhotos { get; set; } = new List<FurnituresPhoto>();
 
     public virtual ICollection<FurnituresReview> FurnituresReviews { get; set; } = new List<FurnituresReview>();

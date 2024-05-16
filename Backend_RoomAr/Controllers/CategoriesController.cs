@@ -9,16 +9,19 @@ namespace Backend_RoomAr.Controllers
     public class CategoriesController : Controller
     {
         public static RoomArDbContext context = new RoomArDbContext();
-        private readonly IConfiguration _configuration;
-
-        public CategoriesController(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
         [HttpGet]
+        [Route("get")]
         public ActionResult<IEnumerable<Category>> Get()
         {
-            return context.Categories;
+            try
+            {
+                var data = context.Categories.ToList();
+                return data;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка сервера");
+            }
         }
 
     }
