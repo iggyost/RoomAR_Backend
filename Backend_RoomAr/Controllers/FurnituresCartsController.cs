@@ -44,6 +44,26 @@ namespace Backend_RoomAr.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка сервера");
             }
         }
+        [HttpGet]
+        [Route("delete/all/{userCartId}")]
+        public ActionResult<IEnumerable<FurnituresCart>> RemoveAllFromUser(int userCartId)
+        {
+            try
+            {
+                var userFurnituresCart = context.FurnituresCarts.Where(x => x.CartId == userCartId).ToList();
+                foreach (var item in userFurnituresCart)
+                {
+                    context.Remove(item);
+                    context.SaveChanges();
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка сервера");
+            }
+        }
         [HttpPut]
         [Route("putcount/{furnitureCartId}/{count}")]
         public ActionResult<IEnumerable<FurnituresCart>> PutCountFurnituresCart(int furnitureCartId, int count)
