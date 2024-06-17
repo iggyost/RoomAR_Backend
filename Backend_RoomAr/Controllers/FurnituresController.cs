@@ -27,6 +27,18 @@ namespace Backend_RoomAr.Controllers
                 return null;
             }
         }
+        [HttpGet("get/all")]
+        public ActionResult<IEnumerable<Furniture>> GetAll()
+        {
+            try
+            {
+                return context.Furnitures.ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         //[HttpGet("furnitures/tocart/{id}")]
         //public ActionResult<IEnumerable<Furniture>> GetFurnituresToCart(int id)
         //{
